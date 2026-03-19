@@ -11,3 +11,16 @@ L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", { /
 L.control.attribution({
   prefix: '© <a href="https://carto.com/">CARTO</a>'
 }).addTo(map);
+
+// goes through topics and adds them to the dropdown menu
+function addToDropdown() {
+  const select = document.getElementById("topic-select");
+  TOPICS.forEach(function(topic) {
+    const option = document.createElement("option");
+    option.value = topic.value;
+    option.textContent = topic.label;
+    select.appendChild(option);
+  });
+}
+
+addToDropdown();
