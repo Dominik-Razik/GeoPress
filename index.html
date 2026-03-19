@@ -8,8 +8,18 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="map"></div> <!-- Map gets loaded from script.js -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!-- Leaflet creates interactable maps -->
+
+  <div id="sidebar">
+    <h1>GeoPress</h1>
+    <select id="topic-select">
+      <option value="">Select a topic</option>
+    </select>
+    <button id="search-btn">Search</button>
+  </div>
+
+  <div id="map"></div> <!-- map gets loaded by leaflet -->
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
