@@ -24,3 +24,22 @@ function addToDropdown() {
 }
 
 addToDropdown();
+
+// fetches news articles from GNews based on a search (https://gnews.io)
+async function fetchNews(query) {
+  const response = await fetch(
+    `https://gnews.io/api/v4/search?q=${query}&max=50&sortby=publishedAt&lang=en&token=${API_KEY}`
+  );
+  const data = await response.json();
+  return data.articles;
+}
+
+// gets the selected topic and fetches related news articles
+function handleSearch() {
+  const query = document.getElementById("topic-select").value;
+  if (!query) return;
+  fetchNews(query).then(articles => console.log(articles));
+}
+
+// waits for a search button click
+document.getElementById("search-btn").addEventListener("click", handleSearch);
