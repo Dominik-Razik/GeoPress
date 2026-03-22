@@ -58,6 +58,80 @@ html, body {
   height: 100%;
 }
 
+#article-panel {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+#article-panel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+#panel-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#panel-header h2 {
+  color: #ffffff;
+  font-size: 16px;
+  font-family: sans-serif;
+}
+
+#close-btn {
+  background: #1e2130;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.article-card {
+  background: #1e2130;
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.article-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.article-card h3 {
+  color: #ffffff;
+  font-size: 13px;
+  font-family: sans-serif;
+}
+
+.article-card p {
+  color: #888888;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+.article-card a {
+  color: #ffffff;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.article-card a:hover {
+  text-decoration: underline;
+}
+
 .custom-marker {
   width: 12px;
   height: 12px;

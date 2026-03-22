@@ -78,12 +78,30 @@ async function fetchNews(query) {
   return data.articles;
 }
 
+// stores placed markers so they can be cleared on next search
+const activeMarkers = [];
+
 // places down a marker based on the coordinates of the supported countries
 function placeMarkers(articles) {
+  // clear existing markers from the map before placing new ones
+  activeMarkers.forEach(function(marker) { marker.remove(); });
+  activeMarkers.length = 0;
+
+  // group articles by country code
+  const byCountry = {};
   articles.forEach(function(article) {
     const country = article.source && article.source.country;
-    const coords = country && COUNTRY_COORDS[country.toLowerCase()];
-    if (!coords) return;
+    if (!country) return;
+    const code = country.toLowerCase();
+    if (!COUNTRY_COORDS[code]) return;
+    if (!byCountry[code]) byCountry[code] = [];
+    byCountry[code].push(article);
+  });
+
+  // place one marker per country
+  Object.keys(byCountry).forEach(function(code) {
+    const coords = COUNTRY_COORDS[code];
+    const countryArticles = byCountry[code];
     const marker = L.marker([coords[0], coords[1]], {
       icon: L.divIcon({
         className: "",
@@ -92,10 +110,34 @@ function placeMarkers(articles) {
         iconAnchor: [6, 6]
       })
     }).addTo(map);
-    marker.bindPopup(
-      `<strong>${article.title}</strong><br><a href="${article.url}" target="_blank">Read more</a>`
-    );
+    marker.on("click", function() { showPanel(countryArticles, code); });
+    activeMarkers.push(marker);
   });
+}
+
+// shows the article panel and adds cards for each article
+function showPanel(articles, countryCode) {
+  const panel = document.getElementById("article-panel");
+  const content = document.getElementById("panel-content");
+  const countryName = COUNTRY_COORDS[countryCode] && COUNTRY_COORDS[countryCode][2];
+  document.querySelector("#panel-header h2").textContent = countryName || "Articles";
+  content.innerHTML = "";
+  articles.forEach(function(article) {
+    const card = document.createElement("div");
+    card.className = "article-card";
+    card.innerHTML =
+      `<img src="${article.image || ""}" alt="">` +
+      `<h3>${article.title}</h3>` +
+      `<p>${article.source.name}</p>` +
+      `<a href="${article.url}" target="_blank">Read full article</a>`;
+    content.appendChild(card);
+  });
+  panel.style.display = "flex";
+}
+
+// hides the article panel
+function closePanel() {
+  document.getElementById("article-panel").style.display = "none";
 }
 
 // gets the selected topic and fetches related news articles
@@ -107,3 +149,6 @@ function handleSearch() {
 
 // waits for a search button click
 document.getElementById("search-btn").addEventListener("click", handleSearch);
+
+// waits for close button click to hide the panel
+document.getElementById("close-btn").addEventListener("click", closePanel);
