@@ -140,11 +140,36 @@ function closePanel() {
   document.getElementById("article-panel").style.display = "none";
 }
 
+// toggles the loading state of the search button and status message
+function setLoading(isLoading) {
+  const btn = document.getElementById("search-btn");
+  const statusMsg = document.getElementById("status-msg");
+  if (isLoading) {
+    btn.textContent = "Searching...";
+    btn.disabled = true;
+    statusMsg.style.display = "block";
+    statusMsg.textContent = "Fetching articles...";
+  } else {
+    btn.textContent = "Search";
+    btn.disabled = false;
+    statusMsg.style.display = "none";
+  }
+}
+
 // gets the selected topic and fetches related news articles
 function handleSearch() {
   const query = document.getElementById("topic-select").value;
   if (!query) return;
-  fetchNews(query).then(articles => placeMarkers(articles));
+  setLoading(true);
+  fetchNews(query)
+    .then(articles => {
+      placeMarkers(articles);
+      setLoading(false);
+    })
+    .catch(error => {
+      setLoading(false);
+      console.error(error);
+    });
 }
 
 // waits for a search button click
