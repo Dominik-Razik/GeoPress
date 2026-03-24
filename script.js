@@ -102,12 +102,15 @@ function placeMarkers(articles) {
   Object.keys(byCountry).forEach(function(code) {
     const coords = COUNTRY_COORDS[code];
     const countryArticles = byCountry[code];
+    const count = countryArticles.length;
+    // size gets increased based on how many articles, min 10, max 30
+    const size = Math.min(10 + count * 3, 30);
     const marker = L.marker([coords[0], coords[1]], {
       icon: L.divIcon({
         className: "",
-        html: '<div class="custom-marker"></div>',
-        iconSize: [12, 12],
-        iconAnchor: [6, 6]
+        html: `<div class="custom-marker" style="width:${size}px; height:${size}px"></div>`,
+        iconSize: [size, size],
+        iconAnchor: [size / 2, size / 2]
       })
     }).addTo(map);
     marker.on("click", function() { showPanel(countryArticles, code); });
@@ -172,8 +175,18 @@ function handleSearch() {
     });
 }
 
+// removes all markers from the map and closes the article panel
+function clearMap() {
+  activeMarkers.forEach(function(marker) { marker.remove(); });
+  activeMarkers.length = 0;
+  closePanel();
+}
+
 // waits for a search button click
 document.getElementById("search-btn").addEventListener("click", handleSearch);
+
+// waits for clear button click to remove all markers
+document.getElementById("clear-btn").addEventListener("click", clearMap);
 
 // waits for close button click to hide the panel
 document.getElementById("close-btn").addEventListener("click", closePanel);
