@@ -127,7 +127,7 @@ html, body {
 
 .article-card img {
   width: 100%;
-  height: 120px;
+  height: 160px;
   object-fit: cover;
   border-radius: 4px;
 }
@@ -154,6 +154,12 @@ html, body {
   text-decoration: underline;
 }
 
+/* Pulse animation for markers */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.4); }
+  100% { box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); }
+}
+
 .custom-marker {
   width: 12px;
   height: 12px;
@@ -161,4 +167,5 @@ html, body {
   background: #ffffff;
   border: 2px solid #555555;
   opacity: 0.85;
+  animation: pulse 1.8s ease-out infinite;
 }

@@ -128,8 +128,8 @@ function showPanel(articles, countryCode) {
   articles.forEach(function(article) {
     const card = document.createElement("div");
     card.className = "article-card";
-    card.innerHTML =
-      `<img src="${article.image || ""}" alt="">` +
+    card.innerHTML = 
+      `<img src="${article.image || 'img/placeholder.png'}" onerror="this.src='img/placeholder.png'" alt="">` + // Placeholder image for if image fails to load
       `<h3>${article.title}</h3>` +
       `<p>${article.source.name}</p>` +
       `<a href="${article.url}" target="_blank">Read full article</a>`;
