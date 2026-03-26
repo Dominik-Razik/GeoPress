@@ -73,6 +73,7 @@ html, body {
   color: #888888;
   text-align: center;
   display: none;
+  font-family: monospace;
 }
 
 #map {

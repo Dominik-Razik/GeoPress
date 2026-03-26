@@ -43,8 +43,11 @@ const COUNTRY_COORDS = {
 };
 
 const map = L.map("map", { // Creates map using leaflet
-  attributionControl: false  // removes default watermark in bottom right
-}).setView([20, 0], 2);
+  attributionControl: false,  // removes default watermark in bottom right
+  maxBounds: [[-90, -180], [90, 180]],
+  maxBoundsViscosity: 1.0,
+  minZoom: 2
+}).setView([20, 0], 3);
  
 L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", { // Loads in the the images from cardo
   subdomains: "abcd",

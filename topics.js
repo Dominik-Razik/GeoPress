@@ -1,5 +1,4 @@
 const TOPICS = [ // List of topics to choose from
-  { label: "Apple", value: "Apple" },
   { label: "Google", value: "Google" },
   { label: "Artificial Intelligence", value: "artificial intelligence" },
   { label: "Cybersecurity", value: "cybersecurity" },
